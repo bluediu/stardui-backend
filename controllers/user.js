@@ -14,10 +14,16 @@ const getUsers = (req = request, res = response) => {
 
 const postUsers = async (req, res) => {
   const { name, email, password, role } = req.body;
-
   const user = new User({ name, email, password, role });
 
   // verificate if the email exist
+  const doesEmailExist = await User.findOne({ email });
+
+  if (doesEmailExist) {
+    return res.status(400).json({
+      msg: 'That email already was taken, please try another',
+    });
+  }
 
   // encrypt the password
   const salt = bcryptjs.genSaltSync();
@@ -27,7 +33,6 @@ const postUsers = async (req, res) => {
   await user.save();
 
   res.json({
-    msg: 'POST',
     user,
   });
 };
