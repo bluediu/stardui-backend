@@ -8,7 +8,11 @@ const {
   patchUsers,
 } = require('../controllers/user');
 
-const { isValidRole } = require('../helpers/db-validator');
+const {
+  isValidRole,
+  doesEmailExist,
+  doesUserExistById,
+} = require('../helpers/db-validator');
 
 const {
   validateFields,
@@ -27,7 +31,7 @@ router.post(
   '/',
   [
     check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Email is incorred').isEmail(),
+    check('email').custom(doesEmailExist),
     check(
       'password',
       'Password must be at least 6 letter'
@@ -38,9 +42,26 @@ router.post(
   postUsers
 );
 
-router.put('/:id', putUsers);
+router.put(
+  '/:id',
+  [
+    check('id', 'It is not a valid id').isMongoId(),
+    check('id').custom(doesUserExistById),
+    check('role').custom(isValidRole),
+    validateFields,
+  ],
+  putUsers
+);
 
-router.delete('/', deleteUser);
+router.delete(
+  '/:id',
+  [
+    check('id', 'It is not a valid id').isMongoId(),
+    check('id').custom(doesUserExistById),
+    validateFields,
+  ],
+  deleteUser
+);
 
 router.patch('/', patchUsers);
 

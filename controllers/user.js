@@ -3,27 +3,24 @@ const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user');
 
-const getUsers = (req = request, res = response) => {
-  const params = req.query;
+const getUsers = async (req = request, res = response) => {
+  const { limit = 5, from = 0 } = req.query;
+  const query = { state: true };
+
+  const [total, users] = await Promise.all([
+    User.countDocuments(query),
+    User.find(query).skip(Number(from)).limit(Number(limit)),
+  ]);
 
   res.json({
-    msg: 'GET - controller',
-    params,
+    total,
+    users,
   });
 };
 
-const postUsers = async (req, res) => {
+const postUsers = async (req = request, res = response) => {
   const { name, email, password, role } = req.body;
   const user = new User({ name, email, password, role });
-
-  // verificate if the email exist
-  const doesEmailExist = await User.findOne({ email });
-
-  if (doesEmailExist) {
-    return res.status(400).json({
-      msg: 'That email already was taken, please try another',
-    });
-  }
 
   // encrypt the password
   const salt = bcryptjs.genSaltSync();
@@ -32,18 +29,22 @@ const postUsers = async (req, res) => {
   // save data in mongodb
   await user.save();
 
-  res.json({
-    user,
-  });
+  res.json(user);
 };
 
-const putUsers = (req = request, res) => {
-  const id = req.params.id;
+const putUsers = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { _id, password, google, email, ...rest } = req.body;
 
-  res.json({
-    msg: 'PUT',
-    id,
-  });
+  if (password) {
+    // encrypt the password
+    const salt = bcryptjs.genSaltSync();
+    rest.password = bcryptjs.hashSync(password, salt);
+  }
+
+  const user = await User.findByIdAndUpdate(id, rest);
+
+  res.json(user);
 };
 
 const patchUsers = (req, res) => {
@@ -52,9 +53,17 @@ const patchUsers = (req, res) => {
   });
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req = request, res = response) => {
+  const { id } = req.params;
+
+  // delete document from mongodb
+  //const user = await User.findByIdAndDelete(id);
+  const user = await User.findByIdAndUpdate(id, {
+    state: false,
+  });
+
   res.json({
-    msg: 'DELETE',
+    user,
   });
 };
 
