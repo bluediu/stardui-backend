@@ -62,9 +62,7 @@ const deleteUser = async (req = request, res = response) => {
     state: false,
   });
 
-  res.json({
-    user,
-  });
+  res.json(user);
 };
 
 module.exports = {

@@ -16,7 +16,10 @@ const {
 
 const {
   validateFields,
-} = require('../middlewares/validate-fields');
+  validateJWT,
+  isAdminRole,
+  itHasRole,
+} = require('../middlewares');
 
 const router = Router();
 
@@ -56,6 +59,9 @@ router.put(
 router.delete(
   '/:id',
   [
+    validateJWT,
+    isAdminRole,
+    itHasRole('ADMIN_ROLE', 'SALES_ROLE'),
     check('id', 'It is not a valid id').isMongoId(),
     check('id').custom(doesUserExistById),
     validateFields,
