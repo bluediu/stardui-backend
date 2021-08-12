@@ -15,7 +15,7 @@ const isAdminRole = (req, res = response, next) => {
     });
   }
 
-  next();
+  return next();
 };
 
 const itHasRole = (...roles) => {
@@ -32,7 +32,7 @@ const itHasRole = (...roles) => {
       });
     }
 
-    next();
+    return next();
   };
 };
 

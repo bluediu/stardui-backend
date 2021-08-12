@@ -1,4 +1,4 @@
-const { response, json } = require('express');
+const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user');
@@ -39,7 +39,7 @@ const login = async (req, res = response) => {
     // Generate Token
     const token = await generateJWT(user.id);
 
-    res.json({
+    return res.json({
       user,
       token,
     });
@@ -51,7 +51,7 @@ const login = async (req, res = response) => {
   }
 };
 
-const googleSignIn = async (req, res = Response) => {
+const googleSignIn = async (req, res = response) => {
   const { id_token } = req.body;
 
   try {
@@ -81,12 +81,12 @@ const googleSignIn = async (req, res = Response) => {
     // Generate Token
     const token = await generateJWT(user.id);
 
-    res.json({
+    return res.json({
       user,
       token,
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       msg: 'Google token is not valid',
     });
   }

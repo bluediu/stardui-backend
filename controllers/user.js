@@ -57,7 +57,7 @@ const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
 
   // delete document from mongodb
-  //const user = await User.findByIdAndDelete(id);
+  // const user = await User.findByIdAndDelete(id);
   const user = await User.findByIdAndUpdate(id, {
     state: false,
   });

@@ -7,7 +7,7 @@ const validateFields = (req, res, next) => {
     return res.status(400).json(errors);
   }
 
-  next();
+  return next();
 };
 
 module.exports = {
