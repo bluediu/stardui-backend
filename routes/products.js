@@ -8,42 +8,46 @@ const {
 const { validateJWT, isAdminRole } = require('../middlewares');
 
 const {
-  createCategory,
-  getCategories,
-  getCategoryById,
-  putCategory,
-  deleteCategory,
-} = require('../controllers/categories');
+  createProduct,
+  getProducts,
+  getProductById,
+  putProduct,
+  deleteProduct,
+} = require('../controllers/products');
 
 const {
   doesCategoryExistById,
+  doesProductExistById,
 } = require('../helpers/db-validator');
 
 const router = Router();
 
-// get all categories - public
-router.get('/', getCategories);
+// get all products - public
+router.get('/', getProducts);
 
-// get categories by id - public
+// get product by id - public
 router.get(
   '/:id',
   [
     check('id', 'It is not a valid id').isMongoId(),
-    check('id').custom(doesCategoryExistById),
+    check('id').custom(doesProductExistById),
     validateFields,
   ],
-  getCategoryById
+  getProductById
 );
 
-// create category - private - any person with a valid token
+// create product - private - any person with a valid token
 router.post(
   '/',
   [
     validateJWT,
     check('name', 'Name is required').not().isEmpty(),
+    check('price', 'The price is required').not().isEmpty(),
+    check('category', 'The category is required').isMongoId(),
+    check('category').custom(doesCategoryExistById),
     validateFields,
   ],
-  createCategory
+  createProduct
 );
 
 // update - private - any person with a valid token
@@ -51,12 +55,11 @@ router.put(
   '/:id',
   [
     validateJWT,
-    check('name', 'Name is required').not().isEmpty(),
     check('id', 'It is not a valid id').isMongoId(),
-    check('id').custom(doesCategoryExistById),
+    check('id').custom(doesProductExistById),
     validateFields,
   ],
-  putCategory
+  putProduct
 );
 
 // delete - Admins
@@ -66,10 +69,10 @@ router.delete(
     validateJWT,
     isAdminRole,
     check('id', 'It is not a valid id').isMongoId(),
-    check('id').custom(doesCategoryExistById),
+    check('id').custom(doesProductExistById),
     validateFields,
   ],
-  deleteCategory
+  deleteProduct
 );
 
 module.exports = router;

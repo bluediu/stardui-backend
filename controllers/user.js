@@ -34,6 +34,7 @@ const postUsers = async (req = request, res = response) => {
 
 const putUsers = async (req = request, res = response) => {
   const { id } = req.params;
+  /* [destructuring] data that i do not delete, only (rest) */
   const { _id, password, google, email, ...rest } = req.body;
 
   if (password) {
@@ -42,7 +43,9 @@ const putUsers = async (req = request, res = response) => {
     rest.password = bcryptjs.hashSync(password, salt);
   }
 
-  const user = await User.findByIdAndUpdate(id, rest);
+  const user = await User.findByIdAndUpdate(id, rest, {
+    new: true,
+  });
 
   res.json(user);
 };
@@ -56,11 +59,15 @@ const patchUsers = (req, res) => {
 const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
 
-  // delete document from mongodb
   // const user = await User.findByIdAndDelete(id);
-  const user = await User.findByIdAndUpdate(id, {
-    state: false,
-  });
+  // delete document from mongodb
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      state: false,
+    },
+    { new: true }
+  );
 
   res.json(user);
 };
