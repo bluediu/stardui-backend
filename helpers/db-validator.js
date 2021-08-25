@@ -48,10 +48,24 @@ const doesProductExistById = async (id) => {
   }
 };
 
+/* validate collections */
+
+const allowedCollections = (collection, collections = []) => {
+  const include = collections.includes(collection);
+
+  if (!include) {
+    throw new Error(
+      `Collection ${collection} is not valid - ${collections}`
+    );
+  }
+  return true;
+};
+
 module.exports = {
-  isValidRole,
-  doesEmailExist,
-  doesUserExistById,
+  allowedCollections,
   doesCategoryExistById,
+  doesEmailExist,
   doesProductExistById,
+  doesUserExistById,
+  isValidRole,
 };
