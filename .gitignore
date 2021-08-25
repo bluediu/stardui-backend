@@ -3,3 +3,5 @@ node_modules/
 
 /uploads/products/**.*
 /uploads/users/**.*
+!/uploads/product/.gitkeep
+!/uploads/user/.gitkeep
