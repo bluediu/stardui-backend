@@ -117,7 +117,7 @@ const updateImageCloudinary = async (req, res = response) => {
     const name = nameArr[nameArr.length - 1];
     const [public_id] = name.split('.');
 
-    await cloudinary.uploader.destroy(public_id);
+    cloudinary.uploader.destroy(public_id);
   }
 
   const { tempFilePath } = req.files.file;
