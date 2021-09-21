@@ -37,7 +37,11 @@ const login = async (req, res = response) => {
     }
 
     // Generate Token
-    const token = await generateJWT(user.id);
+    const token = await generateJWT(
+      user.id,
+      user.name,
+      user.img
+    );
 
     return res.json({
       user,
@@ -79,7 +83,11 @@ const googleSignIn = async (req, res = response) => {
     }
 
     // Generate Token
-    const token = await generateJWT(user.id);
+    const token = await generateJWT(
+      user.id,
+      user.name,
+      user.img
+    );
 
     return res.json({
       user,
@@ -93,12 +101,21 @@ const googleSignIn = async (req, res = response) => {
 };
 
 const revalidateToken = async (req, res = response) => {
-  const { user } = req;
-  const { _id: uid, name } = user;
-  // renew token
-  const token = await generateJWT(user.uid, user.name);
+  try {
+    const { user } = req;
+    const { _id: uid, name, img } = user;
 
-  return res.json({ ok: true, token, uid, name });
+    // renew token
+    const token = await generateJWT(uid, name, img);
+    console.log('Nuevo token', uid, name, img);
+
+    return res.json({ ok: true, uid, name, img, token });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      msg: 'The token is not valid',
+    });
+  }
 };
 
 module.exports = { login, googleSignIn, revalidateToken };

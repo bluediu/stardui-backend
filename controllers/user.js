@@ -1,5 +1,6 @@
 const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
+const { generateJWT } = require('../helpers/generateJWT');
 
 const User = require('../models/user');
 
@@ -29,7 +30,10 @@ const postUsers = async (req = request, res = response) => {
   // save data in mongodb
   await user.save();
 
-  res.json(user);
+  // Generate Token
+  const token = await generateJWT(user.id, user.name, user.img);
+
+  res.json({ user, token });
 };
 
 const putUsers = async (req = request, res = response) => {
