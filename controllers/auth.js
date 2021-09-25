@@ -107,7 +107,6 @@ const revalidateToken = async (req, res = response) => {
 
     // renew token
     const token = await generateJWT(uid, name, img);
-    console.log('Nuevo token', uid, name, img);
 
     return res.json({ ok: true, uid, name, img, token });
   } catch (error) {
