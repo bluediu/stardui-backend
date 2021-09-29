@@ -8,7 +8,7 @@ const getProducts = async (req = request, res = response) => {
   const [total, products] = await Promise.all([
     Product.countDocuments(query),
     Product.find(query)
-      .skip(from)
+      .skip(Number(from))
       .limit(Number(limit))
       .populate('user', 'name')
       .populate('category', 'name'),
