@@ -7,59 +7,76 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-
-    <meta
-      name="google-signin-client_id"
-      content="650587837335-o9jnrb7uhv7138hfrdmthqt34tmj3o32.apps.googleusercontent.com"
-    />
-
     <title>Google Sign-in</title>
   </head>
   <body>
-    <h1>Google Sign-in</h1>
-
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-    <a href="#" onclick="signOut();">Sign out</a>
-
     <script
-      src="https://apis.google.com/js/platform.js"
+      src="https://accounts.google.com/gsi/client"
       async
       defer
     ></script>
+    <h1>Google Sign-in</h1>
+    <hr />
+
+    <div
+      id="g_id_onload"
+      data-client_id="313672854762-d55j7mou1o1vhbnh938ac3i0kngskl20.apps.googleusercontent.com"
+      data-auto_prompt="false"
+      data-callback="handleCredentialResponse"
+    ></div>
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+    ></div>
+
+    <br />
+    <hr />
+    <button id="google-sign-out">Sign Out</button>
 
     <script>
-      let url = window.location.hostname.includes('localhost')
-        ? 'http://localhost:8080/api/auth/google'
-        : 'https://rest-server-bluediu.herokuapp.com/api/auth/google';
+      function handleCredentialResponse(response) {
+        // decodeJwtResponse() is a custom function defined by you
+        // to decode the credential response.
 
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        // google token: 'ID_TOKEN'
+        // console.log('id_token', response.credential);
 
-        var id_token = googleUser.getAuthResponse().id_token;
+        const body = { id_token: response.credential };
 
-        const data = { id_token };
-
-        fetch(url, {
+        fetch('http://localhost:8080/api/auth/google', {
           method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
         })
-          .then((resp) => resp.json())
-          .then((data) => console.log('Mi server', data))
-          .catch((err) => console.log(err));
+          .then((res) => res.json())
+          .then((resp) => {
+            localStorage.setItem('email', resp.user.email);
+            console.log(resp);
+          })
+          .catch(console.warn);
       }
 
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-      }
+      const btn = document.getElementById('google-sign-out');
+      btn.onclick = () => {
+        console.log(google.accounts.id);
+
+        google.accounts.id.disableAutoSelect();
+
+        google.accounts.id.revoke(
+          localStorage.getItem('email'),
+          (done) => {
+            localStorage.clear();
+            location.reload();
+          }
+        );
+      };
     </script>
   </body>
 </html>
