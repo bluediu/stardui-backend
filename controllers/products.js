@@ -2,22 +2,34 @@ const { response, request } = require('express');
 const { Product } = require('../models');
 
 const getProducts = async (req = request, res = response) => {
-  const { limit = 5, from = 0 } = req.query;
-  const query = { state: true };
+  try {
+    const { page = 1, limit = 6 } = req.query;
+    const query = { state: true };
 
-  const [total, products] = await Promise.all([
-    Product.countDocuments(query),
-    Product.find(query)
-      .skip(Number(from))
-      .limit(Number(limit))
-      .populate('user', 'name')
-      .populate('category', 'name'),
-  ]);
+    const size = Number(limit);
+    const skip = (page - 1) * size;
 
-  return res.json({
-    total,
-    products,
-  });
+    const [total, products] = await Promise.all([
+      Product.countDocuments(query),
+      Product.find(query)
+        .skip(skip)
+        .limit(size)
+        .populate('user', 'name')
+        .populate('category', 'name'),
+    ]);
+
+    return res.json({
+      total,
+      limit,
+      page,
+      products,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      products: [],
+    });
+  }
 };
 
 const getProductById = async (req = request, res = response) => {
