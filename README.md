@@ -1,3 +1,3 @@
 ## Stardui | Backend
 
-basic rest server with NodeJS and Express
+stardui backend with NodeJS and Express
