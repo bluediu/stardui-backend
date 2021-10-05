@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const helpFileUpload = (
   files,
-  validExtension = ['png', 'jpg', 'jpeg', 'gif'],
+  validExtension = ['png', 'jpg', 'jpeg', 'gif', 'webp'],
   folder = ''
 ) => {
   // eslint-disable-next-line
