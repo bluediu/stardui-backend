@@ -40,7 +40,8 @@ const login = async (req, res = response) => {
     const token = await generateJWT(
       user.id,
       user.name,
-      user.img
+      user.img,
+      user.role
     );
 
     return res.json({
@@ -104,12 +105,12 @@ const googleSignIn = async (req, res = response) => {
 const revalidateToken = async (req, res = response) => {
   try {
     const { user } = req;
-    const { _id: uid, name, img } = user;
+    const { _id: uid, name, img, role } = user;
 
     // renew token
-    const token = await generateJWT(uid, name, img);
+    const token = await generateJWT(uid, name, img, role);
 
-    return res.json({ ok: true, uid, name, img, token });
+    return res.json({ ok: true, uid, name, role, img, token });
   } catch (error) {
     return res.status(400).json({
       ok: false,
