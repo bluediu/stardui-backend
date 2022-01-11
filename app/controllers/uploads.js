@@ -10,6 +10,7 @@ const { helpFileUpload } = require('../helpers');
 
 const { User, Product } = require('../models');
 
+// files in local storage
 const fileUpload = async (req, res = response) => {
   try {
     const name = await helpFileUpload(
@@ -26,6 +27,7 @@ const fileUpload = async (req, res = response) => {
   }
 };
 
+// update files from local storage
 // eslint-disable-next-line consistent-return
 const updateImage = async (req, res = response) => {
   const { collection, id } = req.params;
@@ -70,17 +72,24 @@ const updateImage = async (req, res = response) => {
     }
   }
 
-  const name = await helpFileUpload(
-    req.files,
-    undefined,
-    collection
-  );
+  try {
+    const name = await helpFileUpload(
+      req.files,
+      undefined,
+      collection
+    );
 
-  model.img = name;
+    model.img = name;
 
-  await model.save();
+    await model.save();
 
-  return res.json(model);
+    return res.json(model);
+  } catch (err) {
+    return res.json({
+      ok: false,
+      msg: 'Error to upload the image',
+    });
+  }
 };
 
 // eslint-disable-next-line consistent-return

@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 
 const {
   fileUpload,
+  updateImage,
   updateImageCloudinary,
   showImage,
 } = require('../controllers/uploads');
@@ -32,6 +33,7 @@ router.put(
   ],
   updateImageCloudinary
 );
+// updateImage
 
 router.get(
   '/:collection/:id',
