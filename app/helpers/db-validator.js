@@ -1,5 +1,5 @@
 const Role = require('../models/role');
-const { User, Category, Product } = require('../models');
+const { User, Category, Cart, Product } = require('../models');
 
 const isValidRole = async (role = '') => {
   const doesRoleExist = await Role.findOne({ role });
@@ -14,6 +14,16 @@ const doesEmailExist = async (email = '') => {
   if (emailExist) {
     throw new Error(
       `That email: ${email}, already was taken, please try another`
+    );
+  }
+};
+
+const doesCartWasTakenByUser = async (userId = '') => {
+  const userExist = await Cart.findOne({ userId });
+
+  if (userExist) {
+    throw new Error(
+      `That cart already exist with that id: ${userId}, please try another`
     );
   }
 };
@@ -64,6 +74,7 @@ const allowedCollections = (collection, collections = []) => {
 module.exports = {
   allowedCollections,
   doesCategoryExistById,
+  doesCartWasTakenByUser,
   doesEmailExist,
   doesProductExistById,
   doesUserExistById,
