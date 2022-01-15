@@ -15,6 +15,7 @@ class Server {
       search: '/api/search',
       uploads: '/api/uploads',
       users: '/api/users',
+      cart: '/api/cart',
     };
 
     // Connect to db
@@ -71,6 +72,7 @@ class Server {
 
     this.app.use(this.paths.search, require('../routes/search'));
     this.app.use(this.paths.users, require('../routes/user'));
+    this.app.use(this.paths.cart, require('../routes/cart'));
   }
 
   listen() {
