@@ -131,6 +131,7 @@ const updateImageCloudinary = async (req, res = response) => {
 
   const { tempFilePath } = req.files.file;
 
+  /* TODO: Put image in specific a folder (user, products) */
   const { secure_url } = await cloudinary.uploader.upload(
     tempFilePath
   );
