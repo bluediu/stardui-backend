@@ -4,21 +4,17 @@ const CartSchema = Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    require: true,
+    required: true,
   },
-  products: [
-    {
-      productId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-        require: true,
-      },
-      quantity: {
-        type: Number,
-        default: 1,
-      },
-    },
-  ],
+  productId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    default: 1,
+  },
 });
 
 module.exports = model('Cart', CartSchema);

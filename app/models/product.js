@@ -33,6 +33,7 @@ const ProductSchema = Schema(
       type: Boolean,
       default: true,
     },
+    size: { type: Array },
     img: { type: String },
   },
   { timestamps: true }

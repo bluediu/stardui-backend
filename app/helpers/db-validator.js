@@ -18,16 +18,6 @@ const doesEmailExist = async (email = '') => {
   }
 };
 
-const doesCartWasTakenByUser = async (userId = '') => {
-  const userExist = await Cart.findOne({ userId });
-
-  if (userExist) {
-    throw new Error(
-      `That cart already exist with that id: ${userId}, please try another`
-    );
-  }
-};
-
 const doesUserExistById = async (id) => {
   const userExist = await User.findById(id);
 
@@ -74,7 +64,6 @@ const allowedCollections = (collection, collections = []) => {
 module.exports = {
   allowedCollections,
   doesCategoryExistById,
-  doesCartWasTakenByUser,
   doesEmailExist,
   doesProductExistById,
   doesUserExistById,
