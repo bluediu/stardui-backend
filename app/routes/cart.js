@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 const {
   addProductToCart,
   getCartOfSpecificUser,
+  countProductsOfSpecificUser,
 } = require('../controllers/cart');
 const { validateFields } = require('../middlewares');
 
@@ -15,6 +16,15 @@ router.get(
     validateFields,
   ],
   getCartOfSpecificUser
+);
+
+router.get(
+  '/count/:userid',
+  [
+    check('userid', 'It is not valid id').isMongoId(),
+    validateFields,
+  ],
+  countProductsOfSpecificUser
 );
 
 // TODO: VALIDATE TOKEN LATER

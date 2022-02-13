@@ -10,14 +10,9 @@ const getCartOfSpecificUser = async (
     const ParamUserId = req.params.userid;
 
     // Get all record given a userId and count documents
-    const [total, userCart] = await Promise.all([
-      Cart.countDocuments({
-        userId: ParamUserId,
-      }),
-      Cart.find({
-        userId: ParamUserId,
-      }).populate('productId'),
-    ]);
+    const userCart = await Cart.find({
+      userId: ParamUserId,
+    }).populate('productId');
 
     const userCartArr = [];
 
@@ -26,13 +21,23 @@ const getCartOfSpecificUser = async (
       userCartArr.push(data);
     }
 
-    return res.json({ total, products: userCartArr });
+    return res.json({ products: userCartArr });
   } catch (err) {
     return res.status(500).json({
       ok: false,
       msg: 'It Could not get this cart, check if the userId is valid',
     });
   }
+};
+
+const countProductsOfSpecificUser = async (req, res) => {
+  const ParamUserId = req.params.userid;
+
+  const total = await Cart.countDocuments({
+    userId: ParamUserId,
+  });
+
+  res.json({ total });
 };
 
 /* ADD NEW USER AND PRODUCT */
@@ -56,4 +61,8 @@ const addProductToCart = async (
   }
 };
 
-module.exports = { addProductToCart, getCartOfSpecificUser };
+module.exports = {
+  addProductToCart,
+  getCartOfSpecificUser,
+  countProductsOfSpecificUser,
+};
