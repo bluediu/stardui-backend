@@ -40,6 +40,23 @@ const countProductsOfSpecificUser = async (req, res) => {
   res.json({ total });
 };
 
+const isProductAddedToCart = async (req, res) => {
+  const { userId } = req.query;
+  const { productId } = req.params;
+
+  const result = await Cart.findOne({
+    productId,
+  }).where({
+    userId,
+  });
+
+  if (result) {
+    return res.json({ exist: true });
+  }
+
+  return res.json({ exist: false });
+};
+
 /* ADD NEW USER AND PRODUCT */
 const addProductToCart = async (
   req = request,
@@ -65,4 +82,5 @@ module.exports = {
   addProductToCart,
   getCartOfSpecificUser,
   countProductsOfSpecificUser,
+  isProductAddedToCart,
 };

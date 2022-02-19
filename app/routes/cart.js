@@ -4,6 +4,7 @@ const {
   addProductToCart,
   getCartOfSpecificUser,
   countProductsOfSpecificUser,
+  isProductAddedToCart,
 } = require('../controllers/cart');
 const { validateFields } = require('../middlewares');
 
@@ -25,6 +26,15 @@ router.get(
     validateFields,
   ],
   countProductsOfSpecificUser
+);
+
+router.get(
+  '/verify/:productId',
+  [
+    check('productId', 'It is not valid id').isMongoId(),
+    validateFields,
+  ],
+  isProductAddedToCart
 );
 
 // TODO: VALIDATE TOKEN LATER
