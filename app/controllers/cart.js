@@ -41,8 +41,7 @@ const countProductsOfSpecificUser = async (req, res) => {
 };
 
 const isProductAddedToCart = async (req, res) => {
-  const { userId } = req.query;
-  const { productId } = req.params;
+  const { productId, userId } = req.params;
 
   const result = await Cart.findOne({
     productId,

@@ -29,9 +29,10 @@ router.get(
 );
 
 router.get(
-  '/verify/:productId',
+  '/verify/:productId/:userId',
   [
-    check('productId', 'It is not valid id').isMongoId(),
+    check('productId', 'productId is not valid id').isMongoId(),
+    check('userId', 'UserId is not valid id').isMongoId(),
     validateFields,
   ],
   isProductAddedToCart
