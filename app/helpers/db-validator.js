@@ -48,6 +48,21 @@ const doesProductExistById = async (id) => {
   }
 };
 
+/*
+ Products
+*/
+const doesProductExistInCart = async (id) => {
+  const productExistInCart = await Cart.findOne({
+    productId: id,
+  });
+
+  console.log(productExistInCart);
+
+  if (!productExistInCart) {
+    throw new Error(`Id not exists: ${id}`);
+  }
+};
+
 /* validate collections */
 
 const allowedCollections = (collection, collections = []) => {
@@ -67,5 +82,6 @@ module.exports = {
   doesEmailExist,
   doesProductExistById,
   doesUserExistById,
+  doesProductExistInCart,
   isValidRole,
 };

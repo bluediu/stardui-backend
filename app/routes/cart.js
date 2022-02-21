@@ -5,7 +5,9 @@ const {
   getCartOfSpecificUser,
   countProductsOfSpecificUser,
   isProductAddedToCart,
+  deleteOneFromCart,
 } = require('../controllers/cart');
+const { doesProductExistInCart } = require('../helpers');
 const { validateFields } = require('../middlewares');
 
 const router = Router();
@@ -36,6 +38,17 @@ router.get(
     validateFields,
   ],
   isProductAddedToCart
+);
+
+router.delete(
+  '/delete/:productId/:userId',
+  [
+    check('productId', 'productId is not valid id').isMongoId(),
+    check('userId', 'UserId is not valid id').isMongoId(),
+    check('productId').custom(doesProductExistInCart),
+    validateFields,
+  ],
+  deleteOneFromCart
 );
 
 // TODO: VALIDATE TOKEN LATER

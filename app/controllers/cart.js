@@ -56,6 +56,23 @@ const isProductAddedToCart = async (req, res) => {
   return res.json({ exist: false });
 };
 
+/* DELETE FROM CART */
+const deleteOneFromCart = async (req, res) => {
+  try {
+    const { productId, userId } = req.params;
+
+    await Cart.findOneAndDelete({
+      productId,
+    }).where({
+      userId,
+    });
+
+    return res.json({ deleted: true });
+  } catch (error) {
+    return res.json({ deleted: false });
+  }
+};
+
 /* ADD NEW USER AND PRODUCT */
 const addProductToCart = async (
   req = request,
@@ -82,4 +99,5 @@ module.exports = {
   getCartOfSpecificUser,
   countProductsOfSpecificUser,
   isProductAddedToCart,
+  deleteOneFromCart,
 };
