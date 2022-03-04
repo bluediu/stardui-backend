@@ -56,8 +56,6 @@ const doesProductExistInCart = async (id) => {
     productId: id,
   });
 
-  console.log(productExistInCart);
-
   if (!productExistInCart) {
     throw new Error(`Id not exists: ${id}`);
   }
