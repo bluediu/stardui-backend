@@ -98,10 +98,25 @@ const deleteProduct = async (req = request, res = response) => {
   return res.json(product);
 };
 
+const getLatestProductsAdded = async (req, res) => {
+  try {
+    // get the latest products added and sort by creation date of the most recient
+    // limit of 5
+    const products = await Product.find()
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    res.json(products);
+  } catch (error) {
+    res.status(404).json({ ok: false });
+  }
+};
+
 module.exports = {
   createProduct,
   getProducts,
   getProductById,
   putProduct,
   deleteProduct,
+  getLatestProductsAdded,
 };

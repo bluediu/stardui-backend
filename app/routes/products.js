@@ -13,6 +13,7 @@ const {
   getProductById,
   putProduct,
   deleteProduct,
+  getLatestProductsAdded,
 } = require('../controllers/products');
 
 const {
@@ -24,6 +25,9 @@ const router = Router();
 
 // get all products - public
 router.get('/', getProducts);
+
+// get the lastest product added with limit of 5
+router.get('/latest', getLatestProductsAdded);
 
 // get product by id - public
 router.get(
