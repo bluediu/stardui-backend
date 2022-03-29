@@ -98,7 +98,7 @@ const deleteProduct = async (req = request, res = response) => {
   return res.json(product);
 };
 
-const getLatestProductsAdded = async (req, res) => {
+const getLatestProductsAdded = async (_, res) => {
   try {
     // get the latest products added and sort by creation date of the most recient
     // limit of 5
@@ -112,6 +112,26 @@ const getLatestProductsAdded = async (req, res) => {
   }
 };
 
+const getProductsByCategory = async (
+  req = request,
+  res = response
+) => {
+  const { id } = req.params;
+
+  try {
+    const [total, products] = await Promise.all([
+      Product.countDocuments({ category: id }),
+      Product.find().where({
+        category: id,
+      }),
+    ]);
+
+    res.json({ ok: true, total, products });
+  } catch (error) {
+    res.status(404).json({ ok: false });
+  }
+};
+
 module.exports = {
   createProduct,
   getProducts,
@@ -119,4 +139,5 @@ module.exports = {
   putProduct,
   deleteProduct,
   getLatestProductsAdded,
+  getProductsByCategory,
 };

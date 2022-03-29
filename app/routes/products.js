@@ -14,6 +14,7 @@ const {
   putProduct,
   deleteProduct,
   getLatestProductsAdded,
+  getProductsByCategory,
 } = require('../controllers/products');
 
 const {
@@ -38,6 +39,16 @@ router.get(
     validateFields,
   ],
   getProductById
+);
+
+// get all products by category
+router.get(
+  '/category/:id',
+  [
+    check('id', 'It is not a valid id').isMongoId(),
+    validateFields,
+  ],
+  getProductsByCategory
 );
 
 // create product - private - any person with a valid token
