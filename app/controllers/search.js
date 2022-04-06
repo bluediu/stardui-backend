@@ -49,13 +49,22 @@ const searchProducts = async (term = '', res = response) => {
 
   const regex = new RegExp(term, 'i');
 
+  let thereAreProducts = null;
+
   const products = await Product.find({
     name: regex,
     state: true,
   }).populate('category', 'name');
 
+  /* check if the database has found products */
+  // eslint-disable-next-line no-unused-expressions
+  products.length >= 1
+    ? (thereAreProducts = true)
+    : (thereAreProducts = false);
+
   return res.json({
     results: products,
+    thereAreProducts,
   });
 };
 
