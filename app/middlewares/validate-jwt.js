@@ -30,7 +30,7 @@ const validateJWT = async (
       });
     }
 
-    // verify if the uid it has state in false
+    // verify if the uid has state in false
     if (!user.state) {
       return res.status(401).json({
         msg: 'Invalid token',

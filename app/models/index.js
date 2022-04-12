@@ -4,6 +4,7 @@ const Server = require('./server');
 const User = require('./user');
 const Product = require('./product');
 const Cart = require('./cart');
+const Order = require('./order');
 
 module.exports = {
   Category,
@@ -12,4 +13,5 @@ module.exports = {
   User,
   Product,
   Cart,
+  Order,
 };
