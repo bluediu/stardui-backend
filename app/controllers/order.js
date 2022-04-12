@@ -19,12 +19,14 @@ const createOrder = async (req = request, res = response) => {
 /* an user can has multiples orders */
 const getOrdersByUser = async (req, res) => {
   try {
+    // get all orders associate a user
     const orders = await Order.find({
       userId: req.params.userId,
     })
       .populate('userId', 'name')
       .populate({
-        path: 'products',
+        path: 'products.productId',
+        select: 'name price img',
       });
 
     res.status(200).json(orders);
