@@ -15,6 +15,10 @@ const CartSchema = Schema({
     type: Number,
     default: 1,
   },
+  size: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = model('Cart', CartSchema);

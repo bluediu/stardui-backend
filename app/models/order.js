@@ -28,9 +28,29 @@ const OrderSchema = Schema(
       type: Number,
       required: true,
     },
-    status: {
+    address: {
       type: String,
-      default: 'pending',
+      required: true,
+    },
+    deliveryTime: {
+      type: String,
+      required: true,
+    },
+    creditCartNumber: {
+      type: String,
+      required: true,
+    },
+    creditCartOwnerName: {
+      type: String,
+      required: true,
+    },
+    expiry: {
+      type: String,
+      required: true,
+    },
+    cvc: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

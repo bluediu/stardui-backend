@@ -8,7 +8,10 @@ const {
   deleteOneFromCart,
 } = require('../controllers/cart');
 const { doesProductExistInCart } = require('../helpers');
-const { validateFields } = require('../middlewares');
+const {
+  validateFields,
+  validateJWT,
+} = require('../middlewares');
 
 const router = Router();
 
@@ -43,6 +46,7 @@ router.get(
 router.delete(
   '/delete/:productId/:userId',
   [
+    validateJWT,
     check('productId', 'productId is not valid id').isMongoId(),
     check('userId', 'UserId is not valid id').isMongoId(),
     check('productId').custom(doesProductExistInCart),
@@ -51,13 +55,13 @@ router.delete(
   deleteOneFromCart
 );
 
-// TODO: VALIDATE TOKEN LATER
-
 router.post(
   '/add',
   [
+    validateJWT,
     check('userId', 'It is not a valid id').isMongoId(),
     check('productId', 'There are not products').not().isEmpty(),
+    check('size', 'Size is required').not().isEmpty(),
     check(
       'quantity',
       'Quantity is undefined or not it is a number'

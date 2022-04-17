@@ -16,6 +16,17 @@ router.post(
   [
     validateJWT,
     check('userId', 'user id is not valid').isMongoId(),
+    check('amount', 'amount is required').not().isEmpty(),
+    check('address', 'address is required').not().isEmpty(),
+    check('deliveryTime', 'deliveryTime is required')
+      .not()
+      .isEmpty(),
+    check('creditCartNumber', 'creditCartNumber is required')
+      .not()
+      .isEmpty(),
+    check('creditCartOwnerName', 'amount is required')
+      .not()
+      .isEmpty(),
     validateFields,
   ],
   createOrder

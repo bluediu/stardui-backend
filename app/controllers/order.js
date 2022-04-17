@@ -11,8 +11,6 @@ const createOrder = async (req = request, res = response) => {
   } catch (err) {
     res.status(500).json(err);
   }
-
-  return res.json({ ok: true });
 };
 
 // GET USER ORDERS
