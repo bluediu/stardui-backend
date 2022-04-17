@@ -12,7 +12,7 @@ const getCartOfSpecificUser = async (
     // Get all record given a userId and count documents
     const userCart = await Cart.find({
       userId: ParamUserId,
-    }).populate('productId');
+    }).populate('productId', 'name price img _id');
 
     const userCartArr = [];
 
