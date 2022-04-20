@@ -24,7 +24,11 @@ const getOrdersByUser = async (req, res) => {
       .populate('userId', 'name')
       .populate({
         path: 'products.productId',
-        select: 'name price img',
+        select: 'name price img category',
+        populate: {
+          path: 'category',
+          select: 'name',
+        },
       });
 
     res.status(200).json(orders);
