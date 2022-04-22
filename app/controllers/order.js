@@ -21,7 +21,7 @@ const getOrdersByUser = async (req, res) => {
     const orders = await Order.find({
       userId: req.params.userId,
     })
-      .populate('userId', 'name')
+      .populate('userId', 'name img')
       .populate({
         path: 'products.productId',
         select: 'name price img category',
