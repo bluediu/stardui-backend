@@ -6,6 +6,7 @@ const {
   countProductsOfSpecificUser,
   isProductAddedToCart,
   deleteOneFromCart,
+  updateQuantityByProduct,
 } = require('../controllers/cart');
 const { doesProductExistInCart } = require('../helpers');
 const {
@@ -70,5 +71,7 @@ router.post(
   ],
   addProductToCart
 );
+
+router.put('/quantity/:id', updateQuantityByProduct);
 
 module.exports = router;

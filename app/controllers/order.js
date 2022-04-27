@@ -17,6 +17,7 @@ const createOrder = async (req = request, res = response) => {
 /* an user can has multiples orders */
 const getOrdersByUser = async (req, res) => {
   try {
+    let thereAreOrdersDone = null;
     // get all orders associate a user
     const orders = await Order.find({
       userId: req.params.userId,
@@ -31,7 +32,12 @@ const getOrdersByUser = async (req, res) => {
         },
       });
 
-    res.status(200).json(orders);
+    // eslint-disable-next-line no-unused-expressions
+    orders.length >= 1
+      ? (thereAreOrdersDone = true)
+      : (thereAreOrdersDone = false);
+
+    res.status(200).json({ thereAreOrdersDone, orders });
   } catch (err) {
     res.status(500).json(err);
   }
