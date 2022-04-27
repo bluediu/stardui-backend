@@ -8,6 +8,7 @@ const getCartOfSpecificUser = async (
 ) => {
   try {
     const ParamUserId = req.params.userid;
+    let thereAreProducts = null;
 
     // Get all record given a userId and count documents
     const userCart = await Cart.find({
@@ -21,7 +22,12 @@ const getCartOfSpecificUser = async (
       userCartArr.push(data);
     }
 
-    return res.json({ products: userCartArr });
+    // eslint-disable-next-line no-unused-expressions
+    userCart.length >= 1
+      ? (thereAreProducts = true)
+      : (thereAreProducts = false);
+
+    return res.json({ thereAreProducts, products: userCartArr });
   } catch (err) {
     return res.status(500).json({
       ok: false,
@@ -94,10 +100,28 @@ const addProductToCart = async (
   }
 };
 
+const updateQuantityByProduct = async (req, res) => {
+  const { id } = req.params;
+  const newQt = req.body;
+
+  try {
+    await Cart.findByIdAndUpdate(id, newQt);
+
+    return res.json({
+      updated: true,
+    });
+  } catch (error) {
+    return res.json({
+      updated: false,
+    });
+  }
+};
+
 module.exports = {
   addProductToCart,
   getCartOfSpecificUser,
   countProductsOfSpecificUser,
   isProductAddedToCart,
   deleteOneFromCart,
+  updateQuantityByProduct,
 };
