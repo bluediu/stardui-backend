@@ -126,7 +126,10 @@ const updateImageCloudinary = async (req, res = response) => {
     const name = nameArr[nameArr.length - 1];
     const [public_id] = name.split('.');
 
-    cloudinary.uploader.destroy(public_id);
+    await cloudinary.uploader.destroy(
+      `stardiu/users/${public_id}`,
+      { resource_type: 'image' }
+    );
   }
 
   const { tempFilePath } = req.files.file;
