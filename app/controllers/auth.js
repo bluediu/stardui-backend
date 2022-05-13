@@ -35,7 +35,7 @@ const login = async (req, res = response) => {
         msg: 'Email / password are incorred - password',
       });
     }
-    console.log('AUTH', user);
+
     // Generate Token
     const token = await generateJWT(
       user.id,
