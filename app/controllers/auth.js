@@ -35,13 +35,14 @@ const login = async (req, res = response) => {
         msg: 'Email / password are incorred - password',
       });
     }
-
+    console.log('AUTH', user);
     // Generate Token
     const token = await generateJWT(
       user.id,
       user.name,
       user.img,
-      user.role
+      user.role,
+      user.google
     );
 
     return res.json({
@@ -87,7 +88,8 @@ const googleSignIn = async (req, res = response) => {
     const token = await generateJWT(
       user.id,
       user.name,
-      user.img
+      user.img,
+      true
     );
 
     return res.json({
@@ -105,10 +107,16 @@ const googleSignIn = async (req, res = response) => {
 const revalidateToken = async (req, res = response) => {
   try {
     const { user } = req;
-    const { _id: uid, name, img, role } = user;
+    const { _id: uid, name, img, role, google } = user;
 
     // renew token
-    const token = await generateJWT(uid, name, img, role);
+    const token = await generateJWT(
+      uid,
+      name,
+      img,
+      role,
+      google
+    );
 
     return res.json({ ok: true, uid, name, role, img, token });
   } catch (error) {
