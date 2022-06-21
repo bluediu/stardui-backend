@@ -5,7 +5,7 @@ const validateFile = require('./validate-file');
 
 module.exports = {
   ...validateFields,
+  ...validateFile,
   ...validateJWT,
   ...validateRoles,
-  ...validateFile,
 };

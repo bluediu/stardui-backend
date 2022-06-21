@@ -1,5 +1,7 @@
 const { response } = require('express');
 
+/* === Validate users roles === */
+
 const isAdminRole = (req, res = response, next) => {
   if (!req.user) {
     return res.status(500).json({

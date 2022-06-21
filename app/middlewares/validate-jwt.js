@@ -1,8 +1,17 @@
 const { response, request } = require('express');
+
 const jwt = require('jsonwebtoken');
 
+/* Models */
 const User = require('../models/user');
 
+/**
+ * It validates the token and if the user is active or not.
+ * @param [req] - request
+ * @param [res] - The response object.
+ * @param next - It is a function that is called when the middleware is finished.
+ * @returns the next() function.
+ */
 const validateJWT = async (
   req = request,
   res = response,
