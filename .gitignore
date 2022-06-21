@@ -4,8 +4,9 @@ package-lock.json
 .vscode
 Todos.md
 
-/uploads/imgs/**.*
-/uploads/products/**.*
-/uploads/users/**.*
+./app/uploads/imgs/**.*
+./app//uploads/products/**.*
+./app/uploads/users/**.*
+
 !/uploads/product/.gitkeep
 !/uploads/user/.gitkeep
