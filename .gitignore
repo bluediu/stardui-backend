@@ -4,6 +4,7 @@ package-lock.json
 .vscode
 Todos.md
 
+/uploads/imgs/**.*
 /uploads/products/**.*
 /uploads/users/**.*
 !/uploads/product/.gitkeep
