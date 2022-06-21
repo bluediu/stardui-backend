@@ -5,7 +5,7 @@ const fileUpload = require('./help-file-upload');
 
 module.exports = {
   ...dbValidators,
+  ...fileUpload,
   ...generateJWT,
   ...googleVerify,
-  ...fileUpload,
 };

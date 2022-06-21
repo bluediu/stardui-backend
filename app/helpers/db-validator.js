@@ -1,6 +1,13 @@
-const Role = require('../models/role');
-const { User, Category, Cart, Product } = require('../models');
+/* Models */
+const {
+  User,
+  Category,
+  Cart,
+  Product,
+  Role,
+} = require('../models');
 
+/* === Roles === */
 const isValidRole = async (role = '') => {
   const doesRoleExist = await Role.findOne({ role });
   if (!doesRoleExist) {
@@ -8,6 +15,7 @@ const isValidRole = async (role = '') => {
   }
 };
 
+/* === Users === */
 const doesEmailExist = async (email = '') => {
   const emailExist = await User.findOne({ email });
 
@@ -26,9 +34,7 @@ const doesUserExistById = async (id) => {
   }
 };
 
-/*
- Categories
-*/
+/* === Categories === */
 const doesCategoryExistById = async (id) => {
   const categoryExist = await Category.findById(id);
 
@@ -37,9 +43,7 @@ const doesCategoryExistById = async (id) => {
   }
 };
 
-/*
- Products
-*/
+/* === Products === */
 const doesProductExistById = async (id) => {
   const productExist = await Product.findById(id);
 
@@ -48,9 +52,6 @@ const doesProductExistById = async (id) => {
   }
 };
 
-/*
- Products
-*/
 const doesProductExistInCart = async (id) => {
   const productExistInCart = await Cart.findOne({
     productId: id,
@@ -61,8 +62,7 @@ const doesProductExistInCart = async (id) => {
   }
 };
 
-/* validate collections */
-
+/* === validate collections === */
 const allowedCollections = (collection, collections = []) => {
   const include = collections.includes(collection);
 
@@ -79,7 +79,7 @@ module.exports = {
   doesCategoryExistById,
   doesEmailExist,
   doesProductExistById,
-  doesUserExistById,
   doesProductExistInCart,
+  doesUserExistById,
   isValidRole,
 };
