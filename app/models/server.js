@@ -56,27 +56,27 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.paths.auth, require('../routes/auth'));
+    this.app.use(this.paths.auth, require('../routes/auth.routes'));
 
     this.app.use(
       this.paths.categories,
-      require('../routes/categories')
+      require('../routes/categories.routes')
     );
 
     this.app.use(
       this.paths.products,
-      require('../routes/products')
+      require('../routes/products.routes')
     );
 
     this.app.use(
       this.paths.uploads,
-      require('../routes/uploads')
+      require('../routes/uploads.routes')
     );
 
-    this.app.use(this.paths.search, require('../routes/search'));
-    this.app.use(this.paths.users, require('../routes/user'));
-    this.app.use(this.paths.cart, require('../routes/cart'));
-    this.app.use(this.paths.order, require('../routes/order'));
+    this.app.use(this.paths.search, require('../routes/search.routes'));
+    this.app.use(this.paths.users, require('../routes/user.routes'));
+    this.app.use(this.paths.cart, require('../routes/cart.routes'));
+    this.app.use(this.paths.order, require('../routes/order.routes'));
   }
 
   listen() {
