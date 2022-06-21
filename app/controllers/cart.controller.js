@@ -1,7 +1,12 @@
+/* libs */
 const { response, request } = require('express');
+
+/* Models */
 const { Cart } = require('../models');
 
-/* GET CART BY USERID */
+/* == GET == */
+
+/* Get cart by userId */
 const getCartOfSpecificUser = async (
   req = request,
   res = response
@@ -62,7 +67,9 @@ const isProductAddedToCart = async (req, res) => {
   return res.json({ exist: false });
 };
 
-/* DELETE FROM CART */
+/* == DELETE == */
+
+/* Delete one from cart */
 const deleteOneFromCart = async (req, res) => {
   try {
     const { productId, userId } = req.params;
@@ -79,7 +86,9 @@ const deleteOneFromCart = async (req, res) => {
   }
 };
 
-/* ADD NEW USER AND PRODUCT */
+/* == CREATE == */
+
+/* Add new user and product */
 const addProductToCart = async (
   req = request,
   res = response
@@ -100,6 +109,7 @@ const addProductToCart = async (
   }
 };
 
+/* == UPDATE == */
 const updateQuantityByProduct = async (req, res) => {
   const { id } = req.params;
   const newQt = req.body;
@@ -119,9 +129,9 @@ const updateQuantityByProduct = async (req, res) => {
 
 module.exports = {
   addProductToCart,
-  getCartOfSpecificUser,
   countProductsOfSpecificUser,
-  isProductAddedToCart,
   deleteOneFromCart,
+  getCartOfSpecificUser,
+  isProductAddedToCart,
   updateQuantityByProduct,
 };

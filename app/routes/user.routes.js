@@ -1,19 +1,23 @@
+/* libs */
 const { Router } = require('express');
 const { check } = require('express-validator');
-const {
-  getUsers,
-  putUsers,
-  postUsers,
-  deleteUser,
-  patchUsers,
-} = require('../controllers/user');
 
+/* Controllers */
+const {
+  createUsers,
+  deleteUser,
+  getUsers,
+  updateUsers,
+} = require('../controllers/user.controller');
+
+/* Helpers */
 const {
   isValidRole,
   doesEmailExist,
   doesUserExistById,
-} = require('../helpers/db-validator');
+} = require('../helpers');
 
+/* Middlewares */
 const {
   validateFields,
   validateJWT,
@@ -21,6 +25,7 @@ const {
   itHasRole,
 } = require('../middlewares');
 
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 /* check('role', 'No is a valid role').isIn([
@@ -42,7 +47,7 @@ router.post(
     check('role').custom(isValidRole),
     validateFields,
   ],
-  postUsers
+  createUsers
 );
 
 router.put(
@@ -54,7 +59,7 @@ router.put(
     check('role').custom(isValidRole),
     validateFields,
   ],
-  putUsers
+  updateUsers
 );
 
 router.delete(
@@ -69,7 +74,5 @@ router.delete(
   ],
   deleteUser
 );
-
-router.patch('/', patchUsers);
 
 module.exports = router;

@@ -1,18 +1,21 @@
+/* libs */
 const { Router } = require('express');
 const { check } = require('express-validator');
 
+/* Controller */
 const {
   login,
   googleSignIn,
   revalidateToken,
-} = require('../controllers/auth');
+} = require('../controllers/auth.controller');
 
-const { validateJWT } = require('../middlewares');
-
+/* Middlewares */
 const {
+  validateJWT,
   validateFields,
-} = require('../middlewares/validate-fields');
+} = require('../middlewares');
 
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 router.post(

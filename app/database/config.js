@@ -9,7 +9,7 @@ const dbConnection = async () => {
       useFindAndModify: false,
     });
 
-    console.log('-- DB ONLINE --');
+    console.log('**===-- Database online ✔ --===**');
   } catch (error) {
     console.log(error);
     throw new Error(

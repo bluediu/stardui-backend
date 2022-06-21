@@ -1,14 +1,20 @@
+/* libs */
 const { Router } = require('express');
 const { check } = require('express-validator');
+
+/* Controllers */
 const {
   createOrder,
   getOrdersByUser,
-} = require('../controllers/order');
+} = require('../controllers/order.controller');
+
+/* Middlewares */
 const {
   validateFields,
   validateJWT,
 } = require('../middlewares');
 
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 router.post(

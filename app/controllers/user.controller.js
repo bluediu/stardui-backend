@@ -1,9 +1,14 @@
+/* libs */
 const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
-const { generateJWT } = require('../helpers/generateJWT');
 
-const User = require('../models/User');
+/* Helpers */
+const { generateJWT } = require('../helpers');
 
+/* Models */
+const { User } = require('../models');
+
+/* == GET == */
 const getUsers = async (req = request, res = response) => {
   const { limit = 5, from = 0 } = req.query;
   const query = { state: true };
@@ -19,7 +24,9 @@ const getUsers = async (req = request, res = response) => {
   });
 };
 
-const postUsers = async (req = request, res = response) => {
+/* == CREATE == */
+
+const createUsers = async (req = request, res = response) => {
   const { name, email, password, role } = req.body;
   const user = new User({ name, email, password, role });
 
@@ -36,7 +43,9 @@ const postUsers = async (req = request, res = response) => {
   res.json({ user, token });
 };
 
-const putUsers = async (req = request, res = response) => {
+/* == UPDATE == */
+
+const updateUsers = async (req = request, res = response) => {
   const { id } = req.params;
   /* [destructuring] data that i do not delete, only (rest) */
   const { _id, password, google, email, ...rest } = req.body;
@@ -54,12 +63,7 @@ const putUsers = async (req = request, res = response) => {
   res.json(user);
 };
 
-const patchUsers = (req, res) => {
-  res.json({
-    msg: 'PATCH',
-  });
-};
-
+/* == DELETE == */
 const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
 
@@ -77,9 +81,8 @@ const deleteUser = async (req = request, res = response) => {
 };
 
 module.exports = {
-  getUsers,
-  putUsers,
-  postUsers,
-  patchUsers,
+  createUsers,
   deleteUser,
+  getUsers,
+  updateUsers,
 };

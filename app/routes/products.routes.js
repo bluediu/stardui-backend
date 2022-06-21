@@ -1,27 +1,32 @@
+/* libs */
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const {
-  validateFields,
-} = require('../middlewares/validate-fields');
-
-const { validateJWT, isAdminRole } = require('../middlewares');
-
+/* Controllers */
 const {
   createProduct,
   getProducts,
   getProductById,
-  putProduct,
+  updateProduct,
   deleteProduct,
   getLatestProductsAdded,
   getProductsByCategory,
-} = require('../controllers/products');
+} = require('../controllers/products.controller');
 
+/* Middlewares */
+const {
+  validateJWT,
+  isAdminRole,
+  validateFields,
+} = require('../middlewares');
+
+/* Helpers */
 const {
   doesCategoryExistById,
   doesProductExistById,
-} = require('../helpers/db-validator');
+} = require('../helpers');
 
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 // get all products - public
@@ -74,7 +79,7 @@ router.put(
     check('id').custom(doesProductExistById),
     validateFields,
   ],
-  putProduct
+  updateProduct
 );
 
 // delete - Admins

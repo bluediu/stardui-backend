@@ -1,6 +1,10 @@
+/* libs */
 const { response, request } = require('express');
+
+/* Models */
 const { Category } = require('../models');
 
+/* == GET == */
 const getCategories = async (req = request, res = response) => {
   const { limit = 5, from = 0 } = req.query;
   const query = { state: true };
@@ -32,6 +36,8 @@ const getCategoryById = async (
   return res.json(category);
 };
 
+/* == CREATE == */
+
 const createCategory = async (req, res = response) => {
   const name = req.body.name.toUpperCase();
 
@@ -57,7 +63,9 @@ const createCategory = async (req, res = response) => {
   res.status(201).json(category);
 };
 
-const putCategory = async (req = request, res = response) => {
+/* == UPDATE == */
+
+const updateCategory = async (req = request, res = response) => {
   const { id } = req.params;
   const { user, state, ...rest } = req.body;
 
@@ -71,6 +79,7 @@ const putCategory = async (req = request, res = response) => {
   return res.json(category);
 };
 
+/* == DELETE == */
 const deleteCategory = async (req = request, res = response) => {
   const { id } = req.params;
 
@@ -87,8 +96,8 @@ const deleteCategory = async (req = request, res = response) => {
 
 module.exports = {
   createCategory,
+  deleteCategory,
   getCategories,
   getCategoryById,
-  putCategory,
-  deleteCategory,
+  updateCategory,
 };

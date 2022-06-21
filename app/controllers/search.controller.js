@@ -1,6 +1,8 @@
+/* libs */
 const { response } = require('express');
 const { ObjectId } = require('mongoose').Types;
 
+/* Models */
 const { User, Category, Product } = require('../models');
 
 const allowedCollections = [
@@ -10,6 +12,7 @@ const allowedCollections = [
   'users',
 ];
 
+/* == GET == */
 const searchUsers = async (term = '', res = response) => {
   const itsMongoID = ObjectId.isValid(term);
 
@@ -91,6 +94,13 @@ const searchCategories = async (term = '', res = response) => {
   });
 };
 
+/**
+ * It takes a collection and a term, and if the collection is allowed, it will search the collection
+ * for the term.
+ * @param {request} req - The request object.
+ * @param {response} res - response
+ * @returns the result of the switch statement.
+ */
 const search = (req, res = response) => {
   const { collection, term } = req.params;
 

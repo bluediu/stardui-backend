@@ -1,24 +1,27 @@
+/* libs */
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const {
-  validateFields,
-} = require('../middlewares/validate-fields');
-
-const { validateJWT, isAdminRole } = require('../middlewares');
-
+/* Controllers */
 const {
   createCategory,
   getCategories,
   getCategoryById,
-  putCategory,
+  updateCategory,
   deleteCategory,
-} = require('../controllers/categories');
+} = require('../controllers/categories.controller');
 
+/* Middlewares */
 const {
-  doesCategoryExistById,
-} = require('../helpers/db-validator');
+  validateJWT,
+  isAdminRole,
+  validateFields,
+} = require('../middlewares');
 
+/* Helpers */
+const { doesCategoryExistById } = require('../helpers');
+
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 // get all categories - public
@@ -56,7 +59,7 @@ router.put(
     check('id').custom(doesCategoryExistById),
     validateFields,
   ],
-  putCategory
+  updateCategory
 );
 
 // delete - Admins

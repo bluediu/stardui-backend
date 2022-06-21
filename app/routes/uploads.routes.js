@@ -2,19 +2,24 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
+/* Controllers */
 const {
   fileUpload,
-  // updateImage,
   updateImageCloudinary,
   showImage,
-} = require('../controllers/uploads');
+  // updateImage,
+} = require('../controllers/uploads.controller');
 
+/* Helpers */
 const { allowedCollections } = require('../helpers');
+
+/* Middlewares */
 const {
   validateFields,
   validateFile,
 } = require('../middlewares');
 
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 router.post('/', validateFile, fileUpload);

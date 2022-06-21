@@ -1,10 +1,15 @@
+/* libs */
 const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
-const User = require('../models/User');
+/* Helpers */
 const { generateJWT } = require('../helpers/generateJWT');
 const { googleVerify } = require('../helpers/google-verify');
 
+/* Models */
+const User = require('../models/User');
+
+/* == Log In == */
 const login = async (req, res = response) => {
   const { email, password } = req.body;
 
@@ -104,6 +109,7 @@ const googleSignIn = async (req, res = response) => {
   }
 };
 
+/* == Renew current user token == */
 const revalidateToken = async (req, res = response) => {
   try {
     const { user } = req;

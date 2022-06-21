@@ -1,5 +1,8 @@
+/* libs */
 const { Router } = require('express');
 const { check } = require('express-validator');
+
+/* Controller */
 const {
   addProductToCart,
   getCartOfSpecificUser,
@@ -7,13 +10,18 @@ const {
   isProductAddedToCart,
   deleteOneFromCart,
   updateQuantityByProduct,
-} = require('../controllers/cart');
-const { doesProductExistInCart } = require('../helpers');
+} = require('../controllers/cart.controller');
+
+/* Middlewares */
 const {
   validateFields,
   validateJWT,
 } = require('../middlewares');
 
+/* Helpers */
+const { doesProductExistInCart } = require('../helpers');
+
+/* Creating a new instance of the Router class. */
 const router = Router();
 
 router.get(

@@ -1,13 +1,17 @@
+/* filesystem */
 const path = require('path');
 const fs = require('fs');
 
+/* libs */
 const { response } = require('express');
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config(process.env.CLOUDINARY_URL);
 
+/* Helpers */
 const { helpFileUpload } = require('../helpers');
 
+/* Models */
 const { User, Product } = require('../models');
 
 // files in local storage
@@ -201,7 +205,7 @@ const showImage = async (req, res) => {
 
 module.exports = {
   fileUpload,
+  showImage,
   updateImage,
   updateImageCloudinary,
-  showImage,
 };
