@@ -2,7 +2,7 @@ const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 const { generateJWT } = require('../helpers/generateJWT');
 
-const User = require('../models/user');
+const User = require('../models/User');
 
 const getUsers = async (req = request, res = response) => {
   const { limit = 5, from = 0 } = req.query;

@@ -3,7 +3,7 @@ const { response, request } = require('express');
 const jwt = require('jsonwebtoken');
 
 /* Models */
-const User = require('../models/user');
+const User = require('../models/User');
 
 /**
  * It validates the token and if the user is active or not.
