@@ -95,7 +95,7 @@ class Server {
   }
 
   listen() {
-    this.app.listen(process.env.PORT || 3000, () => {
+    this.app.listen(this.port || 8080, () => {
       console.log(
         '/** 🚀 Listening in port ',
         this.port,
