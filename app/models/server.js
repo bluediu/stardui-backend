@@ -56,7 +56,10 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.paths.auth, require('../routes/auth.routes'));
+    this.app.use(
+      this.paths.auth,
+      require('../routes/auth.routes')
+    );
 
     this.app.use(
       this.paths.categories,
@@ -73,14 +76,26 @@ class Server {
       require('../routes/uploads.routes')
     );
 
-    this.app.use(this.paths.search, require('../routes/search.routes'));
-    this.app.use(this.paths.users, require('../routes/user.routes'));
-    this.app.use(this.paths.cart, require('../routes/cart.routes'));
-    this.app.use(this.paths.order, require('../routes/order.routes'));
+    this.app.use(
+      this.paths.search,
+      require('../routes/search.routes')
+    );
+    this.app.use(
+      this.paths.users,
+      require('../routes/user.routes')
+    );
+    this.app.use(
+      this.paths.cart,
+      require('../routes/cart.routes')
+    );
+    this.app.use(
+      this.paths.order,
+      require('../routes/order.routes')
+    );
   }
 
   listen() {
-    this.app.listen(this.port, () => {
+    this.app.listen(this.port || 8080, () => {
       console.log(
         '/** 🚀 Listening in port ',
         this.port,
