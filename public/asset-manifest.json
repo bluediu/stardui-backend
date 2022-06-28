@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.daa3d62e.chunk.css",
+    "main.js": "/static/js/main.035500cf.chunk.js",
+    "main.js.map": "/static/js/main.035500cf.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ff89c357.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ff89c357.js.map",
+    "static/css/2.238b7782.chunk.css": "/static/css/2.238b7782.chunk.css",
+    "static/js/2.8e04d5e0.chunk.js": "/static/js/2.8e04d5e0.chunk.js",
+    "static/js/2.8e04d5e0.chunk.js.map": "/static/js/2.8e04d5e0.chunk.js.map",
+    "static/js/3.382102b1.chunk.js": "/static/js/3.382102b1.chunk.js",
+    "static/js/3.382102b1.chunk.js.map": "/static/js/3.382102b1.chunk.js.map",
+    "index.html": "/index.html",
+    "service-worker.js": "/service-worker.js",
+    "service-worker.js.map": "/service-worker.js.map",
+    "static/css/2.238b7782.chunk.css.map": "/static/css/2.238b7782.chunk.css.map",
+    "static/css/main.daa3d62e.chunk.css.map": "/static/css/main.daa3d62e.chunk.css.map",
+    "static/js/2.8e04d5e0.chunk.js.LICENSE.txt": "/static/js/2.8e04d5e0.chunk.js.LICENSE.txt",
+    "static/media/about.d1f5f038.svg": "/static/media/about.d1f5f038.svg",
+    "static/media/blob.de9fc1e4.svg": "/static/media/blob.de9fc1e4.svg",
+    "static/media/categories.b83d2a5f.jpg": "/static/media/categories.b83d2a5f.jpg",
+    "static/media/coffe-cup.811c6884.jpg": "/static/media/coffe-cup.811c6884.jpg",
+    "static/media/coffe-shop.1a194405.jpg": "/static/media/coffe-shop.1a194405.jpg",
+    "static/media/coffee-cup.9433a695.svg": "/static/media/coffee-cup.9433a695.svg",
+    "static/media/defaultProduct.4767ee23.webp": "/static/media/defaultProduct.4767ee23.webp",
+    "static/media/defaultProfile.f0f358f2.png": "/static/media/defaultProfile.f0f358f2.png",
+    "static/media/descImage.d571ba5c.svg": "/static/media/descImage.d571ba5c.svg",
+    "static/media/error404.ded87f5c.svg": "/static/media/error404.ded87f5c.svg",
+    "static/media/hero.1382a501.svg": "/static/media/hero.1382a501.svg",
+    "static/media/person-drink-coffe.6ab05fef.jpg": "/static/media/person-drink-coffe.6ab05fef.jpg",
+    "static/media/recommended.c4e0cdc2.svg": "/static/media/recommended.c4e0cdc2.svg",
+    "static/media/stardiuLogo.77eae348.svg": "/static/media/stardiuLogo.77eae348.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ff89c357.js",
+    "static/css/2.238b7782.chunk.css",
+    "static/js/2.8e04d5e0.chunk.js",
+    "static/css/main.daa3d62e.chunk.css",
+    "static/js/main.035500cf.chunk.js"
+  ]
+}
