@@ -7,7 +7,7 @@ const { generateJWT } = require('../helpers/generateJWT');
 const { googleVerify } = require('../helpers/google-verify');
 
 /* Models */
-const User = require('../models/User');
+const { User } = require('../models');
 
 /* == Log In == */
 const login = async (req, res = response) => {

@@ -1,10 +1,10 @@
-const Cart = require('./Cart');
-const Category = require('./Category');
-const Order = require('./Order');
-const Product = require('./Product');
-const Role = require('./Role');
-const Server = require('./Server');
-const User = require('./User');
+const Cart = require('./Cart.model');
+const Category = require('./Category.model');
+const Order = require('./Order.model');
+const Product = require('./Product.model');
+const Role = require('./Role.model');
+const Server = require('./Server.model');
+const User = require('./User.model');
 
 module.exports = {
   Cart,
