@@ -1,12 +1,16 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
+import jsdocPlugin from 'eslint-plugin-jsdoc';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    plugins: ['jsdoc'],
+    plugins: {
+      jsdoc: jsdocPlugin,
+    },
     languageOptions: { globals: globals.node },
     rules: {
+      'no-undef': 'error',
       'jsdoc/no-undefined-types': 'error',
       'jsdoc/check-param-names': 'error',
       'arrow-body-style': 'off',
