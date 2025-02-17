@@ -1,6 +1,12 @@
+/* Core */
 import cors from 'cors';
 import express from 'express';
+
+/* Libs */
 import fileUpload from 'express-fileupload';
+
+/* Routes */
+import { authRoutes } from '../routes';
 
 const API = '/api';
 
@@ -40,7 +46,9 @@ export class Server {
     );
   }
 
-  routes() {}
+  routes() {
+    this.app.use(this.paths.auth, authRoutes);
+  }
 
   listen() {
     this.app.listen(this.port, () => {
