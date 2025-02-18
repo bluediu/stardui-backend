@@ -12,8 +12,6 @@ async function main() {
   server.listen();
 }
 
-(() => {
-  main();
-})();
+main();
 
 export const viteNodeApp = server.app;
