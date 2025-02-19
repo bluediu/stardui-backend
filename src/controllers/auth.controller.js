@@ -36,7 +36,6 @@ export const login = async (req, res = response) => {
       user.role,
       user.google
     );
-    console.log(token);
 
     return res.json({
       ok: true,
