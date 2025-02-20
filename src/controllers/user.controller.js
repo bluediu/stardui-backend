@@ -41,7 +41,7 @@ export const createUser = async (req = request, res = response) => {
   // Generate JWT
   const token = await generateJWT(user.id, user.name, user.img);
 
-  return res.json({ user, token });
+  return res.status(201).json({ user, token });
 };
 
 export const updateUser = async (req = request, res = response) => {

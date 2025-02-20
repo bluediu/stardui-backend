@@ -1,5 +1,5 @@
 /* Models */
-import { RoleModel, UserModel } from '../models';
+import { RoleModel, UserModel, CategoryModel } from '../models';
 
 /* Roles */
 export const validateRoleExists = async (role = '') => {
@@ -23,5 +23,14 @@ export const validateUserExistsById = async (id) => {
 
   if (!user) {
     throw new Error(`User with ID ${id} does not exist.`);
+  }
+};
+
+/* Categories */
+export const validateCategoryExistsById = async (id) => {
+  const category = await CategoryModel.findById(id);
+
+  if (!category) {
+    throw new Error(`Category with ID ${id} does not exist.`);
   }
 };

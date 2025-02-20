@@ -3,7 +3,7 @@ import { query, validationResult } from 'express-validator';
 /**
  * Middleware to validate query parameters: limit and skip
  */
-export const validateListUsers = [
+export const paginationParams = [
   query('limit')
     .optional()
     .isInt({ min: 1 })
