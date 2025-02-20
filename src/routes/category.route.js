@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 /* Controllers */
-import { listUsers, createUser, deleteUser, updateUser } from '../controllers';
+import * as ctl from '../controllers/category.controller';
 
 /* Middlewares */
 import * as mw from '../middlewares';
@@ -14,21 +14,26 @@ import * as hp from '../helpers';
 // Create router instance
 const router = Router();
 
-router.get('/list', mw.paginationParams, listUsers);
+router.get('/list', mw.paginationParams, ctl.listCategories);
+
+router.get(
+  '/get/:id',
+  [
+    check('id', 'Invalid ID format').isMongoId(),
+    check('id').custom(hp.validateCategoryExistsById),
+    mw.validateFields,
+  ],
+  ctl.getCategory
+);
 
 router.post(
   '/create',
   [
+    mw.validateJWT,
     check('name', 'Name is required').not().isEmpty(),
-    check('role').custom(hp.validateRoleExists).not().isEmpty(),
-    check('email').custom(hp.checkEmailAvailability).not().isEmpty(),
-    check('password', 'Password must be at least 6 characters')
-      .isLength({ min: 6 })
-      .not()
-      .isEmpty(),
     mw.validateFields,
   ],
-  createUser
+  ctl.createCategory
 );
 
 router.patch(
@@ -36,11 +41,11 @@ router.patch(
   [
     mw.validateJWT,
     check('id', 'Invalid ID format').isMongoId(),
-    check('id').custom(hp.validateUserExistsById),
-    check('role').optional().custom(hp.validateRoleExists),
+    check('id').custom(hp.validateCategoryExistsById),
+    check('name', 'Name is required').not().isEmpty(),
     mw.validateFields,
   ],
-  updateUser
+  ctl.updateCategory
 );
 
 router.delete(
@@ -49,10 +54,10 @@ router.delete(
     mw.validateJWT,
     mw.isAdminRole,
     check('id', 'Invalid ID format').isMongoId(),
-    check('id').custom(hp.validateUserExistsById),
+    check('id').custom(hp.validateCategoryExistsById),
     mw.validateFields,
   ],
-  deleteUser
+  ctl.deleteCategory
 );
 
 export default router;
