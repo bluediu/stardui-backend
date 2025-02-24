@@ -5,10 +5,10 @@ import { request, response } from 'express';
 import bcryptjs from 'bcryptjs';
 
 /* Models */
-import { UserModel } from '../models';
+import { UserModel } from '../models/index.js';
 
 /* Helpers */
-import { generateJWT } from '../helpers';
+import { generateJWT } from '../helpers/index.js';
 
 const _encryptPassword = (password) => {
   const salt = bcryptjs.genSaltSync();

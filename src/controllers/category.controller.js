@@ -2,9 +2,10 @@
 import { request, response } from 'express';
 
 /* Models */
-import { CategoryModel } from '../models';
+import { CategoryModel } from '../models/index.js';
 
-import { handleError } from '../helpers';
+/* Helpers */
+import { handleError } from '../helpers/index.js';
 
 export const listCategories = async (req = request, res = response) => {
   const { limit = 10, from = 0 } = req.query;

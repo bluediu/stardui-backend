@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-import { Server } from './presentation';
-import { MongoDatabase } from './config';
+import { Server } from './presentation/index.js';
+import { MongoDatabase } from './config/index.js';
 
 dotenv.config();
 
@@ -14,4 +14,4 @@ async function main() {
 
 main();
 
-export const viteNodeApp = server.app;
+// export const viteNodeApp = server.app;
