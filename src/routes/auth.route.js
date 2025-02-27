@@ -3,10 +3,10 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 /* Controllers */
-import { login, renewToken } from '../controllers';
+import { login, renewToken } from '../controllers/index.js';
 
 /* Middlewares */
-import { validateFields, validateJWT } from '../middlewares';
+import { validateFields, validateJWT } from '../middlewares/index.js';
 
 // Create router instance
 const router = Router();

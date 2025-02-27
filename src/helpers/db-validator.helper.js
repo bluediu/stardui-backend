@@ -1,5 +1,10 @@
 /* Models */
-import { RoleModel, UserModel, CategoryModel } from '../models';
+import {
+  RoleModel,
+  UserModel,
+  CategoryModel,
+  ProductModel,
+} from '../models/index.js';
 
 /* Roles */
 export const validateRoleExists = async (role = '') => {
@@ -32,5 +37,14 @@ export const validateCategoryExistsById = async (id) => {
 
   if (!category) {
     throw new Error(`Category with ID ${id} does not exist.`);
+  }
+};
+
+/* Products */
+export const validateProductExistsById = async (id) => {
+  const product = await ProductModel.findById(id);
+
+  if (!product) {
+    throw new Error(`Product with ID ${id} does not exist.`);
   }
 };

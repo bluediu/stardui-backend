@@ -3,18 +3,23 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 /* Controllers */
-import { listUsers, createUser, deleteUser, updateUser } from '../controllers';
+import {
+  listUsers,
+  createUser,
+  deleteUser,
+  updateUser,
+} from '../controllers/index.js';
 
 /* Middlewares */
-import * as mw from '../middlewares';
+import * as mw from '../middlewares/index.js';
 
 /* Helpers */
-import * as hp from '../helpers';
+import * as hp from '../helpers/index.js';
 
 // Create router instance
 const router = Router();
 
-router.get('/list', mw.paginationParams, listUsers);
+router.get('/list', mw.limitOffsetValidator, listUsers);
 
 router.post(
   '/create',

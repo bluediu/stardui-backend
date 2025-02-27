@@ -3,10 +3,10 @@ import jwt from 'jsonwebtoken';
 import { request, response } from 'express';
 
 /* Models */
-import { UserModel } from '../models';
+import { UserModel } from '../models/index.js';
 
 /* Helpers */
-import { handleError } from '../helpers';
+import { handleError } from '../helpers/index.js';
 
 /**
  * Middleware to validate a JSON Web Token (JWT).

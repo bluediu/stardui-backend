@@ -6,7 +6,12 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 
 /* Routes */
-import { authRoutes, userRoutes, categoryRoutes } from '../routes';
+import {
+  authRoutes,
+  userRoutes,
+  categoryRoutes,
+  productRoutes,
+} from '../routes/index.js';
 
 const API = '/api';
 
@@ -35,7 +40,7 @@ export class Server {
 
     this.app.use(express.json());
 
-    this.app.use(express.static('uploads'));
+    this.app.use(express.static('public'));
 
     this.app.use(
       fileUpload({
@@ -50,6 +55,7 @@ export class Server {
     this.app.use(this.paths.auth, authRoutes);
     this.app.use(this.paths.users, userRoutes);
     this.app.use(this.paths.categories, categoryRoutes);
+    this.app.use(this.paths.products, productRoutes);
   }
 
   listen() {

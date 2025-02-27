@@ -5,10 +5,10 @@ import { response } from 'express';
 import bcryptjs from 'bcryptjs';
 
 /* Models */
-import { UserModel } from '../models';
+import { UserModel } from '../models/index.js';
 
 /* Helpers */
-import { generateJWT, handleError } from '../helpers';
+import { generateJWT, handleError } from '../helpers/index.js';
 
 export const login = async (req, res = response) => {
   const { email, password } = req.body;

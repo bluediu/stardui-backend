@@ -1,4 +1,4 @@
-import { handleError } from '../helpers';
+import { handleError } from '../helpers/index.js';
 
 export const isAdminRole = (req, res, next) => {
   if (!req.user) {
