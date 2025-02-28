@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 /* Controllers */
-import { login, renewToken } from '../controllers/index.js';
+import { login, renewToken, googleSignIn } from '../controllers/index.js';
 
 /* Middlewares */
 import { validateFields, validateJWT } from '../middlewares/index.js';
@@ -21,6 +21,12 @@ router.post(
     validateFields,
   ],
   login
+);
+
+router.post(
+  '/google',
+  [check('id_token', 'id_token is required').not().isEmpty(), validateFields],
+  googleSignIn
 );
 
 router.get('/renew', validateJWT, renewToken);
