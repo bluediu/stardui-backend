@@ -19,9 +19,16 @@ import { handleError } from '../helpers/index.js';
  * the user doesn't exist, or the user is inactive; otherwise, adds the user
  * to `req.user` and calls `next()`.
  */
-// eslint-disable-next-line no-unused-vars
 export const validateJWT = async (req = request, res = response, next) => {
-  const token = req.header('x-token');
+  let token = req.header('Authorization');
+
+  // Check if token exists and has the correct format
+  if (!token || !token.startsWith('Bearer ')) {
+    return handleError({ res, msg: 'Invalid token format' });
+  }
+
+  // Extract the actual token
+  token = token.split(' ')[1];
 
   if (!token) return handleError({ res, msg: 'Invalid token' });
 
