@@ -1,5 +1,6 @@
 /* Core */
 import { request, response } from 'express';
+import { Types } from 'mongoose';
 
 /* Models */
 import { ProductModel } from '../models/index.js';
@@ -56,7 +57,9 @@ export const getProductsByCategory = async (req = request, res = response) => {
   try {
     const [total, products] = await Promise.all([
       ProductModel.countDocuments({ category: id, state: true }),
-      ProductModel.find({ state: true }).where({ category: id }),
+      ProductModel.find({ state: true })
+        .where({ category: id })
+        .populate('category', 'name'),
     ]);
 
     return res.json({ total, products });
@@ -78,6 +81,36 @@ export const getLatestProducts = async (req = request, res = response) => {
     console.log(error);
     return res.json({ ok: false, products: [] });
   }
+};
+
+export const searchProducts = async (req = request, res = response) => {
+  const { term } = req.params;
+  const isValidMongoId = Types.ObjectId.isValid(term);
+
+  if (isValidMongoId) {
+    const product = await ProductModel.findById(term).populate(
+      'category',
+      'name'
+    );
+
+    return res.json({ results: product || [] });
+  }
+
+  // Clean & evaluate search term.
+  const regex = new RegExp(term, 'i');
+  let validProductsExists = true;
+
+  const products = await ProductModel.find({
+    name: regex,
+    state: true,
+  }).populate('category', 'name');
+
+  if (!products.length) validProductsExists = false;
+
+  return res.json({
+    results: validProductsExists ? products : [],
+    validProductsExists: validProductsExists,
+  });
 };
 
 export const createProduct = async (req = request, res = response) => {

@@ -38,6 +38,12 @@ router.get(
   ctl.getProductsByCategory
 );
 
+router.get(
+  '/search/:term',
+  [check('term', 'Invalid search term').isString(), mw.validateFields],
+  ctl.searchProducts
+);
+
 router.get('/latest', ctl.getLatestProducts);
 
 router.post(
