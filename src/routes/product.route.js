@@ -58,6 +58,7 @@ router.post(
     check('size', 'Size is required').not().isEmpty().isArray(),
     check('price', 'Price is required').not().isEmpty().isNumeric(),
     check('description', 'Description is required').not().isEmpty(),
+    check('img').isEmpty().optional(),
 
     check('category', 'Category is required').not().isEmpty(),
     check('category', 'Invalid ID format').isMongoId(),
@@ -84,6 +85,7 @@ router.patch(
     check('size', 'Size is required').isArray().optional(),
     check('price', 'Price is required').isNumeric().optional(),
     check('description', 'Description is required').optional(),
+    check('img').isEmpty().optional(),
 
     check('category', 'Category is required').optional(),
     check('category', 'Invalid ID format').isMongoId().optional(),

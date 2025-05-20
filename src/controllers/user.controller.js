@@ -8,7 +8,7 @@ import bcryptjs from 'bcryptjs';
 import { UserModel } from '../models/index.js';
 
 /* Helpers */
-import { generateJWT } from '../helpers/index.js';
+import { generateJWT, uploadImageCloudinary } from '../helpers/index.js';
 
 const _encryptPassword = (password) => {
   const salt = bcryptjs.genSaltSync();
@@ -58,6 +58,16 @@ export const updateUser = async (req = request, res = response) => {
   const { _id, password, google, email, ...rest } = req.body;
 
   if (password) rest.password = _encryptPassword(password);
+
+  const canChangeImage = !req.user.google && req.files?.img;
+
+  if (canChangeImage) {
+    rest.img = await uploadImageCloudinary({
+      file: req.files.img,
+      existingImageUrl: req.user.img,
+      folderName: 'stardiu/users',
+    });
+  }
 
   const user = await UserModel.findByIdAndUpdate(id, rest, { new: true });
 
