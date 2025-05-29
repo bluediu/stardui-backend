@@ -8,7 +8,11 @@ import bcryptjs from 'bcryptjs';
 import { UserModel } from '../models/index.js';
 
 /* Helpers */
-import { generateJWT } from '../helpers/index.js';
+import {
+  generateJWT,
+  removeImageCloudinary,
+  uploadImageCloudinary,
+} from '../helpers/index.js';
 
 const _encryptPassword = (password) => {
   const salt = bcryptjs.genSaltSync();
@@ -54,14 +58,47 @@ export const createUser = async (req = request, res = response) => {
 export const updateUser = async (req = request, res = response) => {
   const { id } = req.params;
 
+  const googleUser = req.user.google;
+  if (googleUser)
+    return res.status(400).json({
+      msg: 'Google users cannot update their information',
+    });
+
   // eslint-disable-next-line no-unused-vars
-  const { _id, password, google, email, ...rest } = req.body;
+  const { _id, password, google, ...rest } = req.body;
 
   if (password) rest.password = _encryptPassword(password);
+
+  const canChangeImage = !googleUser && req.files?.img;
+
+  if (canChangeImage) {
+    rest.img = await uploadImageCloudinary({
+      file: req.files.img,
+      existingImageUrl: req.user.img,
+      folderName: 'stardiu/users',
+    });
+  }
 
   const user = await UserModel.findByIdAndUpdate(id, rest, { new: true });
 
   return res.json(user);
+};
+
+export const deleteUserImage = async (req = request, res = response) => {
+  const { id } = req.params;
+
+  const user = await UserModel.findById(id);
+
+  if (!user) return res.status(404).json({ msg: 'User not found' });
+
+  await removeImageCloudinary({
+    existingImageUrl: user.img,
+    folderName: 'stardiu/users',
+  });
+
+  await UserModel.findByIdAndUpdate(id, { img: 'NO_IMG' }, { new: true });
+
+  return res.json({ ok: true, msg: 'Image deleted successfully' });
 };
 
 export const deleteUser = async (req = request, res = response) => {

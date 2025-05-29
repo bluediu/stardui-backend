@@ -8,6 +8,7 @@ import {
   createUser,
   deleteUser,
   updateUser,
+  deleteUserImage,
 } from '../controllers/index.js';
 
 /* Middlewares */
@@ -47,6 +48,8 @@ router.patch(
   ],
   updateUser
 );
+
+router.delete('/remove/image/:id', [mw.validateJWT], deleteUserImage);
 
 router.delete(
   '/delete/:id',

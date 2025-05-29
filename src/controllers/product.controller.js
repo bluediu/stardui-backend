@@ -6,7 +6,7 @@ import { Types } from 'mongoose';
 import { ProductModel } from '../models/index.js';
 
 /* Helpers */
-import { handleError } from '../helpers/index.js';
+import { handleError, uploadImageCloudinary } from '../helpers/index.js';
 
 export const listProducts = async (req = request, res = response) => {
   try {
@@ -121,6 +121,15 @@ export const createProduct = async (req = request, res = response) => {
   if (productExists)
     return handleError({ res, msg: `Category: ${name} already exists.` });
 
+  const canUploadImage = req.files?.img;
+  if (canUploadImage) {
+    rest.img = await uploadImageCloudinary({
+      file: req.files.img,
+      existingImageUrl: '',
+      folderName: 'stardiu/products',
+    });
+  }
+
   // Create raw data.
   const data = {
     ...rest,
@@ -132,7 +141,7 @@ export const createProduct = async (req = request, res = response) => {
 
   await product.save();
 
-  return res.status(201).json(product);
+  return res.status(201).json({ ...product._doc, img: product.img });
 };
 
 export const updateProduct = async (req = request, res = response) => {
@@ -144,6 +153,16 @@ export const updateProduct = async (req = request, res = response) => {
   if (rest.name) rest.name = rest.name.toUpperCase();
 
   rest.user = req.user._id;
+
+  const canUploadImage = req.files?.img;
+  if (canUploadImage) {
+    const product = await ProductModel.findById(id);
+    rest.img = await uploadImageCloudinary({
+      file: req.files.img,
+      existingImageUrl: product.img,
+      folderName: 'stardiu/products',
+    });
+  }
 
   const product = await ProductModel.findByIdAndUpdate(id, rest, {
     new: true,

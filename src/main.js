@@ -1,8 +1,7 @@
-import dotenv from 'dotenv';
+import './config/env.js';
+
 import { Server } from './presentation/index.js';
 import { MongoDatabase } from './config/index.js';
-
-dotenv.config();
 
 const server = new Server();
 
